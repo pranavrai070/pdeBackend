@@ -1,6 +1,7 @@
 const Alert = require('../models/Alert');
 const User = require('../models/User');
-const socketHandler = require('../sockets/socketHandler');
+const {emitNewAlert,emitAcceptAlert}=require("../sockets/socketHandler");
+
 
 const sendAlert = async (req, res) => {
   try {
@@ -9,8 +10,8 @@ const sendAlert = async (req, res) => {
     const alert = new Alert({ patient: userId, location: { type: 'Point', coordinates: location } });
     await alert.save();
 
-    // Emit socket event for new alert
-    socketHandler.emitNewAlert(alert);
+    console.log("geeting about emit function",emitNewAlert);
+    emitNewAlert(alert);
 
     res.status(200).json({ success: true, message: 'Alert sent successfully' });
   } catch (error) {
@@ -37,9 +38,9 @@ const acceptAlert = async (req, res) => {
     alert.status = 'accepted';
     alert.doctor = userId;
     await alert.save();
-
-    // Emit socket event for alert acceptance
-    socketHandler.emitAlertAccepted(alert);
+    
+    emitAcceptAlert(alert);
+    
 
     res.status(200).json({ success: true, message: 'Alert accepted successfully' });
   } catch (error) {
