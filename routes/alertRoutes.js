@@ -6,6 +6,7 @@ const alertController = require('../controllers/alertController');
 router.post('/', alertController.sendAlert);
 router.post('/accept', alertController.acceptAlert);
 router.post('/close', alertController.closeAlert);
+router.post('/delete', alertController.deleteAlert);
 router.post('/get', alertController.getAlerts);
 router.get('/get/:alertId', alertController.getAlert);
 router.post('/getPatientPendingAlert', alertController.getPatientPendingAlert);

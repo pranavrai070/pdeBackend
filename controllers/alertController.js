@@ -72,6 +72,14 @@ const closeAlert = async (req, res) => {
   }
 };
 
+const deleteAlert=async(req,res)=>{
+  console.log("delte gets hit his");
+  const {patientId}=req.body;
+  await Alert.deleteMany({
+patient:patientId});
+  return res.status(200).json({message:"Successfully Deleted the Patient Alerts"});
+};
+
 const getAlerts=async(req,res)=>{
   console.log("get his");
   const {type}=req.body;
@@ -106,5 +114,6 @@ module.exports={
     getAlerts,
     getAlert,
     getPatientPendingAlert,
-    closeAlert
+    closeAlert,
+    deleteAlert
 }
